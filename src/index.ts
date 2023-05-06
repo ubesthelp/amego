@@ -1,3 +1,7 @@
-const add = (a: number, b: number) => a + b;
+import Amego from './Amego';
+import * as Invoice from './invoice';
 
-export default add;
+export {
+  Amego,
+  Invoice,
+};
