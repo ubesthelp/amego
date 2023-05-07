@@ -21,7 +21,6 @@ describe('add', () => {
       freeTaxSalesAmount: 0,
       zeroTaxSalesAmount: 0,
       taxRate: 5,
-      taxAmount: 0.5,
       totalAmount: 10,
     });
   });

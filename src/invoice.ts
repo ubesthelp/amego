@@ -76,8 +76,6 @@ export interface InvoiceParameters {
   zeroTaxSalesAmount: number;
   /** 稅率，為 5% 時本欄位值為 5 */
   taxRate: number;
-  /** 營業稅額 */
-  taxAmount: number;
   /** 總計 */
   totalAmount: number;
   /** 通關方式註記，若為零稅率發票，則此欄位為必填。 */
@@ -113,3 +111,26 @@ export interface InvoiceResult {
   /** 列印格式字串，正確且需要列印才會回傳 */
   base64Data?: string;
 }
+
+export const getTaxType = (params: InvoiceParameters) => {
+  const { taxType } = params.productItems[0];
+
+  for (let i = 1; i < params.productItems.length; i++) {
+    const element = params.productItems[i];
+
+    if (element.taxType !== taxType) {
+      return 9;
+    }
+  }
+
+  if (taxType === 'TAXABLE' && params.taxRate !== 5) {
+    return 4;
+  }
+
+  return taxTypes.indexOf(taxType) + 1;
+};
+
+export const getTaxAmount = (params: InvoiceParameters) => {
+  const total = params.productItems.reduce((prev, item) => prev + item.amount, 0);
+  return Math.round(total - total / (1 + params.taxRate / 100));
+};
