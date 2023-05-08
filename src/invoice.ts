@@ -19,7 +19,7 @@ interface ProductItem {
 }
 
 /** 开立发票请求 */
-export interface InvoiceRequest {
+export interface CreateInvoiceRequest {
   /** 訂單編號，不可重複，不可超過 40 字 */
   OrderId: string;
   /** 買方統一編號，買方統一編號，沒有則填入 0000000000 */
@@ -75,7 +75,7 @@ export interface InvoiceRequest {
 }
 
 /** 开立发票响应 */
-export interface InvoiceResponse extends CommonResponse {
+export interface CreateInvoiceResponse extends CommonResponse {
   /** 發票號碼，正確才會回傳 */
   invoice_number?: string;
   /** 發票開立時間，Unix 時間戳記，正確才會回傳 */
@@ -107,7 +107,7 @@ interface GetInvoiceStatusRequest {
   InvoiceNumber: string;
 }
 
-/** 作废发票请求 */
+/** 获取發票上傳狀態请求 */
 export type GetInvoicesStatusRequest = GetInvoiceStatusRequest[];
 
 /** 發票上傳狀態 */

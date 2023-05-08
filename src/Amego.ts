@@ -1,14 +1,20 @@
 /* eslint-disable no-console */
 import axios, { AxiosInstance } from 'axios';
+import {
+  CancelAllowancesRequest,
+  CreateAllowancesRequest,
+  GetAllowancesStatusRequest,
+  GetAllowancesStatusResponse,
+} from './allowance';
 import { CommonResponse } from './commonResponse';
 import {
   CancelInvoicesRequest,
+  CreateInvoiceRequest,
+  CreateInvoiceResponse,
   DownloadInvoiceFileRequest,
   DownloadInvoiceFileResponse,
   GetInvoicesStatusRequest,
   GetInvoicesStatusResponse,
-  InvoiceRequest,
-  InvoiceResponse,
   QueryInvoiceRequest,
   QueryInvoiceResponse,
 } from './invoice';
@@ -60,8 +66,8 @@ export default class Amego {
    * @param request 开立发票请求
    * @returns 执行结果
    */
-  async invoice(request: InvoiceRequest) {
-    return this.post<InvoiceRequest, InvoiceResponse>('/json/c0401', request);
+  async createInvoice(request: CreateInvoiceRequest) {
+    return this.post<CreateInvoiceRequest, CreateInvoiceResponse>('/json/c0401', request);
   }
 
   /**
@@ -102,5 +108,36 @@ export default class Amego {
    */
   async downloadInvoiceFile(request: DownloadInvoiceFileRequest) {
     return this.post<DownloadInvoiceFileRequest, DownloadInvoiceFileResponse>('/json/invoice_file', request);
+  }
+
+  /**
+   * 折讓已開立的發票
+   * @param request 折讓请求
+   * @returns 执行结果
+   */
+  async createAllowance(request: CreateAllowancesRequest) {
+    return this.post<CreateAllowancesRequest, CommonResponse>('/json/d0401', request);
+  }
+
+  /**
+   * 作廢已開立的折讓單
+   * @param invoiceNumbers 折讓單號碼
+   * @returns 执行结果
+   */
+  async cancelAllowances(allowanceNumbers: string[]) {
+    return this.post<CancelAllowancesRequest, CommonResponse>('/json/d0501', allowanceNumbers.map((n) => ({
+      CancelAllowanceNumber: n,
+    })));
+  }
+
+  /**
+   * 获取折讓單的上傳狀態
+   * @param allowanceNumbers 折讓單號碼
+   * @returns 执行结果
+   */
+  async getAllowancesStatus(allowanceNumbers: string[]) {
+    return this.post<GetAllowancesStatusRequest, GetAllowancesStatusResponse>('/json/allowance_status', allowanceNumbers.map((n) => ({
+      AllowanceNumber: n,
+    })));
   }
 }
