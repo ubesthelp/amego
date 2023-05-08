@@ -1,6 +1,17 @@
 /* eslint-disable no-console */
 import axios, { AxiosInstance } from 'axios';
-import { InvoiceRequest, InvoiceResponse } from './invoice';
+import { CommonResponse } from './commonResponse';
+import {
+  CancelInvoicesRequest,
+  DownloadInvoiceFileRequest,
+  DownloadInvoiceFileResponse,
+  GetInvoicesStatusRequest,
+  GetInvoicesStatusResponse,
+  InvoiceRequest,
+  InvoiceResponse,
+  QueryInvoiceRequest,
+  QueryInvoiceResponse,
+} from './invoice';
 import md5 from './md5';
 
 /**
@@ -46,9 +57,50 @@ export default class Amego {
 
   /**
    * 开立发票。
-   * @param params 开立发票请求
+   * @param request 开立发票请求
+   * @returns 执行结果
    */
-  async invoice(params: InvoiceRequest) {
-    return this.post<InvoiceRequest, InvoiceResponse>('/json/c0401', params);
+  async invoice(request: InvoiceRequest) {
+    return this.post<InvoiceRequest, InvoiceResponse>('/json/c0401', request);
+  }
+
+  /**
+   * 作廢已開立的發票
+   * @param invoiceNumbers 發票號碼
+   * @returns 执行结果
+   */
+  async cancelInvoices(invoiceNumbers: string[]) {
+    return this.post<CancelInvoicesRequest, CommonResponse>('/json/c0501', invoiceNumbers.map((n) => ({
+      CancelInvoiceNumber: n,
+    })));
+  }
+
+  /**
+   * 获取發票的上傳狀態
+   * @param invoiceNumbers 發票號碼
+   * @returns 执行结果
+   */
+  async getInvoicesStatus(invoiceNumbers: string[]) {
+    return this.post<GetInvoicesStatusRequest, GetInvoicesStatusResponse>('/json/invoice_status', invoiceNumbers.map((n) => ({
+      InvoiceNumber: n,
+    })));
+  }
+
+  /**
+   * 查詢發票內容
+   * @param request 查詢發票內容请求
+   * @returns 执行结果
+   */
+  async queryInvoice(request: QueryInvoiceRequest) {
+    return this.post<QueryInvoiceRequest, QueryInvoiceResponse>('/json/invoice_query', request);
+  }
+
+  /**
+   * 下載發票檔案(PDF格式)。載具發票中獎後才可下載，非載具發票可無限次下載。
+   * @param request 下載發票檔案请求
+   * @returns 执行结果
+   */
+  async downloadInvoiceFile(request: DownloadInvoiceFileRequest) {
+    return this.post<DownloadInvoiceFileRequest, DownloadInvoiceFileResponse>('/json/invoice_file', request);
   }
 }

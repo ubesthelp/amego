@@ -1,8 +1,8 @@
 import { Amego } from '../index';
 import { NO_BUYER_IDENTIFIER } from '../invoice';
 
-describe('add', () => {
-  test('1 + 2 = 3', async () => {
+describe('Invoicing', () => {
+  test('Invoice', async () => {
     const amego = new Amego('12345678', 'sHeq7t8G1wiQvhAuIM27');
     const result = await amego.invoice({
       OrderId: '12345',
@@ -25,6 +25,12 @@ describe('add', () => {
       TaxAmount: 0,
       TotalAmount: 10,
     });
+    expect(result.code).toEqual(0);
+  });
+
+  test('Query', async () => {
+    const amego = new Amego('12345678', 'sHeq7t8G1wiQvhAuIM27');
+    const result = await amego.queryInvoice({ type: 'order', order_id: '12345' });
     expect(result.code).toEqual(0);
   });
 });
