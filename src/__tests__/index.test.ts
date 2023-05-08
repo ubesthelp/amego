@@ -5,23 +5,26 @@ describe('add', () => {
   test('1 + 2 = 3', async () => {
     const amego = new Amego('12345678', 'sHeq7t8G1wiQvhAuIM27');
     const result = await amego.invoice({
-      orderId: '12345',
-      buyerIdentifier: NO_BUYER_IDENTIFIER,
-      buyerName: 'Buyer',
-      productItems: [
+      OrderId: '12345',
+      BuyerIdentifier: NO_BUYER_IDENTIFIER,
+      BuyerName: 'Buyer',
+      ProductItem: [
         {
-          description: 'AAA',
-          quantity: 1,
-          unitPrice: 10,
-          amount: 10,
-          taxType: 'TAXABLE',
+          Description: 'AAA',
+          Quantity: 1,
+          UnitPrice: 10,
+          Amount: 10,
+          TaxType: 1,
         },
       ],
-      salesAmount: 10,
-      freeTaxSalesAmount: 0,
-      zeroTaxSalesAmount: 0,
-      taxRate: 5,
-      totalAmount: 10,
+      SalesAmount: 10,
+      FreeTaxSalesAmount: 0,
+      ZeroTaxSalesAmount: 0,
+      TaxType: 1,
+      TaxRate: '0.05',
+      TaxAmount: 0,
+      TotalAmount: 10,
     });
+    expect(result.code).toEqual(0);
   });
 });
