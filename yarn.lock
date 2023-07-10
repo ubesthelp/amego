@@ -961,10 +961,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^20.1.0":
+"@types/node@npm:*":
   version: 20.1.0
   resolution: "@types/node@npm:20.1.0"
   checksum: c6d9afa9aa78b4b4348c69ece94975be70346b144c278f1395694a10ef919d7db300018101b6f9245e6bdd76674a5327d2d14829092f3d5295e858cff5f22a66
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^20.4.1":
+  version: 20.4.1
+  resolution: "@types/node@npm:20.4.1"
+  checksum: 22cbcc792f2eb636fe4188778ed0f32658ab872aa7fcb9847b3fa289a42b14b9f5e30c6faec50ef3c7adbc6c2a246926e5858136bb8b10c035a3fcaa6afbeed2
   languageName: node
   linkType: hard
 
@@ -1131,7 +1138,7 @@ __metadata:
   resolution: "@ubesthelp/amego@workspace:."
   dependencies:
     "@types/jest": 29.5.1
-    "@types/node": ^20.1.0
+    "@types/node": ^20.4.1
     "@typescript-eslint/eslint-plugin": 5.59.2
     "@typescript-eslint/parser": 5.59.2
     axios: ^1.4.0
